@@ -12,7 +12,7 @@ const vaseAsin = 'B08119Z2BR'
 let settings = {
 	"async": true,
 	"crossDomain": true,
-	"url": "https://amazon-products1.p.rapidapi.com/product?country=US&asin=" + selections[i],
+	// "url": "https://amazon-products1.p.rapidapi.com/product?country=US&asin=" + selections[i],
 	"method": "GET",
 	"headers": {
 		"x-rapidapi-host": "amazon-products1.p.rapidapi.com/product?",
@@ -39,36 +39,60 @@ $(() => {
 
 // console.log($('[type=checkbox]'))
 
-//put input from form inside the array
+//Put input from form inside the array.
+
+// This is an event listener for when the Add button is clicked.
 $('#submit').on('click', () => {
 
-    const $inputValue = $('#input-box').val
-    ()
+    // assigning the input word to the constant $inputValue.
+    const $inputValue = $('#input-box').val()
+
+    // Pushing the input value inside the selections array.
     selections.push($inputValue)
 
-
+    // Preventing the webpage from automatically refreshing so it does not lose state.
     event.preventDefault()
 
+
+    // Assigning the varible $newInput to the <div>'s. The value of these <div>'s will appear on the webpage.
     let $newInput = $('<div>').text(selections[selections.length-1])
 
+    // Appending the new input values to the design board so we have a visual list of input values (the items).
     $('.design-board').append($newInput)
     
+    // Making a button and assigning it to the constant $remove. This has an event listener and event handler so that when the button is clicked, it will remove the items from the design board.
     const $remove = $('<button>').text('Remove Item').addClass('remove')
+
 
     $newInput.append($remove)
 
     $remove.on('click', (event) => {
         
         $(event.currentTarget).parent().remove()
+        selections.pop()
+    })
+    console.log(selections[selections.length - 1])
+
+    
+})
+
+
+const $mixUp = $('<button>').text('Mix it up').addClass('mix-up')
+
+    $mixUp.on('click', (event) => {
+        $(event.currentTarget).sort(function(a, b){
+            return 0.5 - Math.random()
+        })
     })
 
-})
+    $('.design-board').append($mixUp)
+
 
 //////////This is the if logic for matching the value of the checked box and the corresponding constant with the ASIN number.//////////
 
 
 // // this is supposed to use the vairable assigned to the sofa html element
-// if (selector[0] = $sofa) {
+// if (selections[0] = $sofa) {
 //     //this selects the url and adds the ASIN number to it
 //     settings.url + sofaAsin
 
@@ -80,7 +104,6 @@ $('#submit').on('click', () => {
 // }
 
 })
-
 
 //user will input information into a form
 //form will match URL to an asin number

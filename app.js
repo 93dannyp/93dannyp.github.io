@@ -31,6 +31,14 @@ $(() => {
 $('.submit').on('click', () => {
     const $inputValue = $('.check-Box')
     selections.push($inputValue)
+
+    // prevents default refresh
+    event.preventDefault()
+
+    let $newInput = $('<div>').text(selections[selections.length-1])
+
+
+    
 })
 
 })

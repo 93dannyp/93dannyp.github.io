@@ -2,51 +2,86 @@
 
 //implementing amazon products API (link:'')
 
-// let asin = input
+const pillowAsin = 'B086DJ9Z3D'
+const sofaAsin = 'B019516ZP8'
+const endTableAsin = 'B01NBVTJPV'
+const lampAsin = 'B073751DMJ'
+const vaseAsin = 'B08119Z2BR'
 
-// let settings = {
-// 	"async": true,
-// 	"crossDomain": true,
-// 	"url": "https://amazon-products1.p.rapidapi.com/product?country=US&asin=B07WVNBY1G",
-// 	"method": "GET",
-// 	"headers": {
-// 		"x-rapidapi-host": "amazon-products1.p.rapidapi.com/product?",
-// 		"x-rapidapi-key": ""
-// 	}
-// }
+
+let settings = {
+	"async": true,
+	"crossDomain": true,
+	// "url": "https://amazon-products1.p.rapidapi.com/product?country=US&asin=" + selections[i],
+	"method": "GET",
+	"headers": {
+		"x-rapidapi-host": "amazon-products1.p.rapidapi.com/product?",
+		"x-rapidapi-key": ""
+	}
+}
 
 // $.ajax(settings).done(function (response) {
 // 	console.log(response);
 // });
 
-// make an array of pushed variables
-const selections = []
-//make a form that accepts input
-
-
-$(() => {
-
-
-//put input from form inside the array
-$('.submit').on('click', () => {
-    const $inputValue = $('.check-Box')
-    selections.push($inputValue)
-
-    // prevents default refresh
-    event.preventDefault()
-
-    let $newInput = $('<div>').text(selections[selections.length-1])
-
-
-    
-})
-
-})
-console.log(selections)
 
 let $sofa = $('#sofa')
 let $pillow = $('#pillow')
 let $lamp = $('lamp')
+
+// make an array of pushed variables
+//make a form that accepts input
+
+
+$(() => {
+    //the selections array should have the ASIN values from the product selected from the checklist
+
+// console.log($('[type=checkbox]'))
+
+//put input from form inside the array
+$('.submit').on('click', () => {
+
+    let selections = []
+
+//**** the next two lines of code need work. Only accepting first checked box and not all checked boxes. ****//
+   const $inputValue = $('input[name=\'item\']:checked').each((i) => {
+        val[i] = selections.push($(this).val())
+    })
+
+
+    // console.log('input[name=\'item\']:checked')
+
+//     console.log($inputValue)
+    // selections.push($inputValue)
+    // prevents default refresh
+
+
+
+    event.preventDefault()
+
+    // let $newInput = $('<div>').text(selections[selections.length-1])
+
+    $('.design-board').append($inputValue)
+    
+})
+
+//////////This is the if logic for matching the value of the checked box and the corresponding constant with the ASIN number.//////////
+
+
+// // this is supposed to use the vairable assigned to the sofa html element
+// if (selector[0] = $sofa) {
+//     //this selects the url and adds the ASIN number to it
+//     settings.url + sofaAsin
+
+    //// this uses the API to Get the desired information for the thumbnail
+
+    // $.ajax(settings).done(function (response) {
+// 	console.log(response);
+// });
+// }
+
+})
+
 
 //user will input information into a form
 //form will match URL to an asin number

@@ -12,7 +12,7 @@ const vaseAsin = 'B08119Z2BR'
 let settings = {
 	"async": true,
 	"crossDomain": true,
-	// "url": "https://amazon-products1.p.rapidapi.com/product?country=US&asin=" + selections[i],
+	"url": "https://amazon-products1.p.rapidapi.com/product?country=US&asin=" + selections[i],
 	"method": "GET",
 	"headers": {
 		"x-rapidapi-host": "amazon-products1.p.rapidapi.com/product?",
@@ -35,34 +35,33 @@ let $lamp = $('lamp')
 
 $(() => {
     //the selections array should have the ASIN values from the product selected from the checklist
+    let selections = []
 
 // console.log($('[type=checkbox]'))
 
 //put input from form inside the array
-$('.submit').on('click', () => {
+$('#submit').on('click', () => {
 
-    let selections = []
-
-//**** the next two lines of code need work. Only accepting first checked box and not all checked boxes. ****//
-   const $inputValue = $('input[name=\'item\']:checked').each((i) => {
-        val[i] = selections.push($(this).val())
-    })
-
-
-    // console.log('input[name=\'item\']:checked')
-
-//     console.log($inputValue)
-    // selections.push($inputValue)
-    // prevents default refresh
-
+    const $inputValue = $('#input-box').val
+    ()
+    selections.push($inputValue)
 
 
     event.preventDefault()
 
-    // let $newInput = $('<div>').text(selections[selections.length-1])
+    let $newInput = $('<div>').text(selections[selections.length-1])
 
-    $('.design-board').append($inputValue)
+    $('.design-board').append($newInput)
     
+    const $remove = $('<button>').text('Remove Item').addClass('remove')
+
+    $newInput.append($remove)
+
+    $remove.on('click', (event) => {
+        
+        $(event.currentTarget).parent().remove()
+    })
+
 })
 
 //////////This is the if logic for matching the value of the checked box and the corresponding constant with the ASIN number.//////////
@@ -106,6 +105,9 @@ $('.submit').on('click', () => {
 
 //////////////////////////////// code graveyard ////////////////////////////
 
+
+
+//// an attempt to get my API to function ////
 // const baseURL = `https://` + settings.headers['x-rapidapi-host']
 // const apiKey = `apikey=` + settings.headers['x-rapidapi-key']
 // // console.log(settings.headers['x-rapidapi-host'])
@@ -118,4 +120,21 @@ $('.submit').on('click', () => {
 // $.ajax(settings).done(function (response) {
 // 	console.log(response);
 // });
+
+
+
+//// attempted to use checkboxes in order to limit the response field. could not get multiple selected values to populate inside the array on one 'submit' click. Switched to a search box input. ////
+
+//**** the next two lines of code need work. Only accepting first checked box and not all checked boxes. ****//
+// const $inputValue = $('input[name=\'item\']:checked').each((i) => {
+//     val[i] = selections.push($(this).val())
+// })
+
+
+// console.log('input[name=\'item\']:checked')
+
+//     console.log($inputValue)
+// selections.push($inputValue)
+// prevents default refresh
+
 

@@ -74,20 +74,29 @@ $('#submit').on('click', () => {
     })
     // console.log(selections[selections.length - 1])
 
-const sofaInfo = (url) => {
+const itemInfo = () => {
+
+}
+
+const sofaInfo = () => {
     settings.url = settings.url + sofaAsin
         $.ajax(settings).done(function (response) {
             // Appending the item image to the tile
-        $('.sofa').append(response.images[0])
                 const sofaImageLink = response.images[0]                
-                const sofaImage = $('<img>').attr('src',sofaImageLink)
+                const sofaImage = $('<img>').attr('src', sofaImageLink)
                 $('#sofa').append(sofaImage)
         // Appending the item price to the tile
-        const sofaPrice = $('<div>').text('$' + 'response.prices[current_price]')
-        $('.sofa').append(sofaPrice)
+        const sofaPrice = $('<div>').text('$' + `${response.prices.current_price}`).addClass('price')
+        $('#sofa').append(sofaPrice)
+        // Assigning a <div> to a constant with the item rating and number of reviews and with the class 'rating-review'.
+        const sofaRatingReview = $('<div>').text('Rating: ' + `${response.reviews.stars}` + '/5' + ' Reviews: ' + `${response.reviews.total_reviews}`).addClass('rating-review')
+        console.log('Rating: ' + `${response.reviews.stars}` + '/5' + ' Reviews: ' + `${response.reviews.total_reviews}`)
+        // Appending the constant to the sofa div.
+        $('#sofa').append(sofaRatingReview)
             })
             settings.url = "https://amazon-products1.p.rapidapi.com/product?country=US&asin="
     }
+
     
     const lampInfo = () => {
         settings.url = settings.url + lampAsin
@@ -96,6 +105,10 @@ const sofaInfo = (url) => {
             const lampImageLink = response.images[0]
             const lampImage = $('<img>').attr('src', lampImageLink)
             $('#lamp').append(lampImage)  
+        const lampPrice = $('<div>').text('$' + `${response.prices.current_price}`).addClass('price')
+        $('#lamp').append(lampPrice)
+        const lampRatingReview = $('<div>').text('Rating: ' + `${response.reviews.stars}` + '/5' + ' Reviews: ' + `${response.reviews.total_reviews}`).addClass('rating-review')
+        $('#lamp').append(lampRatingReview)
         })
         settings.url = "https://amazon-products1.p.rapidapi.com/product?country=US&asin="
     }
@@ -106,6 +119,11 @@ const sofaInfo = (url) => {
             const vaseImageLink = response.images[0]
             const vaseImage = $('<img>').attr('src', vaseImageLink)
             $('#vase').append(vaseImage)  
+
+            const vasePrice = $('<div>').text('$' + `${response.prices.current_price}`).addClass('price')
+        $('#vase').append(vasePrice)
+        const vaseRatingReview = $('<div>').text('Rating: ' + `${response.reviews.stars}` + '/5' + ' Reviews: ' + `${response.reviews.total_reviews}`).addClass('rating-review')
+        $('#vase').append(vaseRatingReview)
         })
         settings.url = "https://amazon-products1.p.rapidapi.com/product?country=US&asin="
     }

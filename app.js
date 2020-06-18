@@ -4,7 +4,7 @@
 
 const pillowAsin = 'B086DJ9Z3D'
 const sofaAsin = 'B019516ZP8'
-const tableAsin = 'B01NBVTJPV'
+const tableAsin = 'B01C1A5BMS'
 const lampAsin = 'B073751DMJ'
 const vaseAsin = 'B08119Z2BR'
 
@@ -134,6 +134,11 @@ const sofaInfo = () => {
             const pillowImageLink = response.images[0]
             const pillowImage = $('<img>').attr('src', pillowImageLink)
             $('#pillow').append(pillowImage)  
+
+            const pillowPrice = $('<div>').text('$' + `${response.prices.current_price}`).addClass('price')
+        $('#pillow').append(pillowPrice)
+        const pillowRatingReview = $('<div>').text('Rating: ' + `${response.reviews.stars}` + '/5' + ' Reviews: ' + `${response.reviews.total_reviews}`).addClass('rating-review')
+        $('#pillow').append(pillowRatingReview)
         })
         settings.url = "https://amazon-products1.p.rapidapi.com/product?country=US&asin="
     }
@@ -144,6 +149,11 @@ const sofaInfo = () => {
             const tableImageLink = response.images[0]
             const tableImage = $('<img>').attr('src', tableImageLink)
             $('#table').append(tableImage)  
+
+            const tablePrice = $('<div>').text('$' + `${response.prices.current_price}`).addClass('price')
+        $('#table').append(tablePrice)
+        const tableRatingReview = $('<div>').text('Rating: ' + `${response.reviews.stars}` + '/5' + ' Reviews: ' + `${response.reviews.total_reviews}`).addClass('rating-review')
+        $('#table').append(tableRatingReview)
         })
         settings.url = "https://amazon-products1.p.rapidapi.com/product?country=US&asin="
     }

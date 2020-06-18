@@ -4,12 +4,12 @@
 
 const pillowAsin = 'B086DJ9Z3D'
 const sofaAsin = 'B019516ZP8'
-const endTableAsin = 'B01NBVTJPV'
+const tableAsin = 'B01NBVTJPV'
 const lampAsin = 'B073751DMJ'
 const vaseAsin = 'B08119Z2BR'
 
 
-let settings = {
+const settings = {
 	"async": true,
 	"crossDomain": true,
 	"url": "https://amazon-products1.p.rapidapi.com/product?country=US&asin=",
@@ -20,14 +20,12 @@ let settings = {
 	}
 }
 
+const apiURL = settings.url
 // $.ajax(settings).done(function (response) {
 // 	console.log(response);
 // });
 
 
-let $sofa = $('#sofa')
-let $pillow = $('#pillow')
-let $lamp = $('lamp')
 
 // make an array of pushed variables
 //make a form that accepts input
@@ -74,41 +72,76 @@ $('#submit').on('click', () => {
         $(event.currentTarget).parent().remove()
         selections.pop()
     })
-    console.log(selections[selections.length - 1])
+    // console.log(selections[selections.length - 1])
 
-    if ($inputValue == 'sofa') {
-        settings.url = settings.url + sofaAsin
-        // console.log(settings.url)
+const sofaInfo = (url) => {
+    settings.url = settings.url + sofaAsin
         $.ajax(settings).done(function (response) {
-    // console.log(response.images);
-    // $('.sofa').append(response.images[0])
-    const sofaImageLink = response.images[0]
-    // console.log(sofaImageLink)
+            // Appending the item image to the tile
+        $('.sofa').append(response.images[0])
+                const sofaImageLink = response.images[0]                
+                const sofaImage = $('<img>').attr('src',sofaImageLink)
+                $('#sofa').append(sofaImage)
+        // Appending the item price to the tile
+        const sofaPrice = $('<div>').text('$' + 'response.prices[current_price]')
+        $('.sofa').append(sofaPrice)
+            })
+            settings.url = "https://amazon-products1.p.rapidapi.com/product?country=US&asin="
+    }
     
-    const sofaImage = $('<img>').attr('src',sofaImageLink)
-    
-    console.log(sofaImage)
-    $('#sofa').append(sofaImage)
-
-})
-    } else if ($inputValue == 'lamp') {
-        settings.url = settings.url - sofaAsin + lampAsin
-        // needs work. I think it's adding in the asin number form the previous settings.url concatenation (settings.url + sofaAsin).....
-
-
+    const lampInfo = () => {
+        settings.url = settings.url + lampAsin
+        console.log(settings.url)
         $.ajax(settings).done(function (response) {
             const lampImageLink = response.images[0]
-
             const lampImage = $('<img>').attr('src', lampImageLink)
-
-            $('#lamp').append(lampImage)
-            
+            $('#lamp').append(lampImage)  
         })
-
-
-
-    
+        settings.url = "https://amazon-products1.p.rapidapi.com/product?country=US&asin="
     }
+
+    const vaseInfo = () => {
+        settings.url = settings.url + vaseAsin
+        $.ajax(settings).done(function (response) {
+            const vaseImageLink = response.images[0]
+            const vaseImage = $('<img>').attr('src', vaseImageLink)
+            $('#vase').append(vaseImage)  
+        })
+        settings.url = "https://amazon-products1.p.rapidapi.com/product?country=US&asin="
+    }
+
+    const pillowInfo = () => {
+        settings.url = settings.url + pillowAsin
+        $.ajax(settings).done(function (response) {
+            const pillowImageLink = response.images[0]
+            const pillowImage = $('<img>').attr('src', pillowImageLink)
+            $('#pillow').append(pillowImage)  
+        })
+        settings.url = "https://amazon-products1.p.rapidapi.com/product?country=US&asin="
+    }
+
+    const tableInfo = () => {
+        settings.url = settings.url + tableAsin
+        $.ajax(settings).done(function (response) {
+            const tableImageLink = response.images[0]
+            const tableImage = $('<img>').attr('src', tableImageLink)
+            $('#table').append(tableImage)  
+        })
+        settings.url = "https://amazon-products1.p.rapidapi.com/product?country=US&asin="
+    }
+
+    if ($inputValue == 'sofa') { 
+        sofaInfo()
+    } else if ($inputValue == 'lamp') {
+        lampInfo()
+    } else if ($inputValue == 'vase') {
+        vaseInfo()
+    } else if ($inputValue == 'pillow') {
+        pillowInfo()
+    } else if ($inputValue == 'table') {
+        tableInfo()
+    }
+
 })
 
 const $mixUp = $('<button>').text('Mix it up').addClass('mix-up')

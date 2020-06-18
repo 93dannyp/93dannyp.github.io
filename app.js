@@ -56,7 +56,7 @@ $('#submit').on('click', () => {
 
     // Assigning the varible $newInput to the <div>'s. The value of these <div>'s will appear on the webpage.
     let $newInput = $('<div>').text(selections[selections.length-1])
-    $newInput.addClass($inputValue)
+    $newInput.addClass('item').attr('id', $inputValue)
 
     // Appending the new input values to the design board so we have a visual list of input values (the items).
     $('.design-board').append($newInput)
@@ -85,12 +85,29 @@ $('#submit').on('click', () => {
     const sofaImageLink = response.images[0]
     // console.log(sofaImageLink)
     
-    const sofaImage = $('img').attr('src',sofaImageLink)
+    const sofaImage = $('<img>').attr('src',sofaImageLink)
     
     console.log(sofaImage)
-    // $('.sofa').append(sofaImage)
+    $('#sofa').append(sofaImage)
 
-});
+})
+    } else if ($inputValue == 'lamp') {
+        settings.url = settings.url + lampAsin
+
+
+
+        $.ajax(settings).done(function (response) {
+            const lampImageLink = response.images[0]
+
+            const lampImage = $('<img>').attr('src', lampImageLink)
+
+            $('#lamp').append(lampImage)
+            
+        })
+
+
+
+    
     }
 })
 

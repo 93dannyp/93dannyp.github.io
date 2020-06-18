@@ -12,7 +12,7 @@ const vaseAsin = 'B08119Z2BR'
 let settings = {
 	"async": true,
 	"crossDomain": true,
-	// "url": "https://amazon-products1.p.rapidapi.com/product?country=US&asin=" + selections[i],
+	"url": "https://amazon-products1.p.rapidapi.com/product?country=US&asin=",
 	"method": "GET",
 	"headers": {
 		"x-rapidapi-host": "amazon-products1.p.rapidapi.com/product?",
@@ -44,10 +44,10 @@ $(() => {
 // This is an event listener for when the Add button is clicked.
 $('#submit').on('click', () => {
 
-    // assigning the input word to the constant $inputValue.
+    // assigning the input string to the constant $inputValue.
     const $inputValue = $('#input-box').val()
-
-    // Pushing the input value inside the selections array.
+    
+    // Pushing the input string inside the selections array.
     selections.push($inputValue)
 
     // Preventing the webpage from automatically refreshing so it does not lose state.
@@ -56,9 +56,12 @@ $('#submit').on('click', () => {
 
     // Assigning the varible $newInput to the <div>'s. The value of these <div>'s will appear on the webpage.
     let $newInput = $('<div>').text(selections[selections.length-1])
+    $newInput.addClass($inputValue)
 
     // Appending the new input values to the design board so we have a visual list of input values (the items).
     $('.design-board').append($newInput)
+    
+    
     
     // Making a button and assigning it to the constant $remove. This has an event listener and event handler so that when the button is clicked, it will remove the items from the design board.
     const $remove = $('<button>').text('Remove Item').addClass('remove')
@@ -73,9 +76,23 @@ $('#submit').on('click', () => {
     })
     console.log(selections[selections.length - 1])
 
+    if ($inputValue == 'sofa') {
+        settings.url = settings.url + sofaAsin
+        // console.log(settings.url)
+        $.ajax(settings).done(function (response) {
+    // console.log(response.images);
+    // $('.sofa').append(response.images[0])
+    const sofaImageLink = response.images[0]
+    // console.log(sofaImageLink)
     
-})
+    const sofaImage = $('img').attr('src',sofaImageLink)
+    
+    console.log(sofaImage)
+    // $('.sofa').append(sofaImage)
 
+});
+    }
+})
 
 const $mixUp = $('<button>').text('Mix it up').addClass('mix-up')
 
@@ -86,6 +103,8 @@ const $mixUp = $('<button>').text('Mix it up').addClass('mix-up')
     })
 
     $('.design-board').append($mixUp)
+
+    
 
 
 //////////This is the if logic for matching the value of the checked box and the corresponding constant with the ASIN number.//////////

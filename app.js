@@ -92,8 +92,8 @@ $('#submit').on('click', () => {
 
 })
     } else if ($inputValue == 'lamp') {
-        settings.url = settings.url + lampAsin
-
+        settings.url = settings.url - sofaAsin + lampAsin
+        // needs work. I think it's adding in the asin number form the previous settings.url concatenation (settings.url + sofaAsin).....
 
 
         $.ajax(settings).done(function (response) {

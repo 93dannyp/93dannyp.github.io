@@ -37,6 +37,9 @@ $(() => {
 
 // console.log($('[type=checkbox]'))
 
+
+
+
 //Put input from form inside the array.
 
 // This is an event listener for when the Add button is clicked.
@@ -46,8 +49,13 @@ $('#submit').on('click', () => {
     const $inputValue = $('#input-box').val()
     
     // Pushing the input string inside the selections array.
+   if (selections.length < 6) {
     selections.push($inputValue)
 
+    console.log(selections)
+   } else {
+       alert('Your Design Board is full!")')
+   }
     // Preventing the webpage from automatically refreshing so it does not lose state.
     event.preventDefault()
 
@@ -59,6 +67,14 @@ $('#submit').on('click', () => {
     // Appending the new input values to the design board so we have a visual list of input values (the items).
     $('.design-board').append($newInput)
     
+    //// this is the mix up code ////
+    $('#mix-up').on('click', (event) => {
+        selections.sort(() => {
+            return .5-Math.random()
+         })
+        })
+        // this is the closing bracket for the mix event listener
+         //// this is the mix up code ////
     
     
     // Making a button and assigning it to the constant $remove. This has an event listener and event handler so that when the button is clicked, it will remove the items from the design board.
@@ -72,11 +88,8 @@ $('#submit').on('click', () => {
         $(event.currentTarget).parent().remove()
         selections.pop()
     })
-    // console.log(selections[selections.length - 1])
 
-const itemInfo = () => {
-
-}
+    
 
 const sofaInfo = () => {
     settings.url = settings.url + sofaAsin
@@ -172,15 +185,17 @@ const sofaInfo = () => {
 
 })
 
-const $mixUp = $('<button>').text('Mix it up').addClass('mix-up')
+// listen for mix button
+// randomize array
+// for loop append array into div
+// 
 
-    $mixUp.on('click', (event) => {
-        $(event.currentTarget).sort(function(a, b){
-            return 0.5 - Math.random()
-        })
-    })
 
-    $('.design-board').append($mixUp)
+
+
+// this is the closing bracket for the add button event listener
+
+
 
     
 
@@ -216,7 +231,7 @@ const $mixUp = $('<button>').text('Mix it up').addClass('mix-up')
     //a thumbnail image of the product
         //link the image so that it links out to where it was brought from
     //the price of the product
-    // a short product description
+    // Product rating
 //
 
 

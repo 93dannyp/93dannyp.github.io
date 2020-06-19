@@ -43,7 +43,7 @@ $(() => {
 //Put input from form inside the array.
 
 // This is an event listener for when the Add button is clicked.
-$('#submit').on('click', () => {
+$('#submit').on('click', (event) => {
 
     // assigning the input string to the constant $inputValue.
     const $inputValue = $('#input-box').val()
@@ -56,6 +56,9 @@ $('#submit').on('click', () => {
    } else {
        alert('Your Design Board is full!")')
    }
+   
+ 
+   
     // Preventing the webpage from automatically refreshing so it does not lose state.
     event.preventDefault()
 
@@ -64,17 +67,13 @@ $('#submit').on('click', () => {
     let $newInput = $('<div>').text(selections[selections.length-1])
     $newInput.addClass('item').attr('id', $inputValue)
 
+   
+
     // Appending the new input values to the design board so we have a visual list of input values (the items).
     $('.design-board').append($newInput)
     
-    //// this is the mix up code ////
-    $('#mix-up').on('click', (event) => {
-        selections.sort(() => {
-            return .5-Math.random()
-         })
-        })
-        // this is the closing bracket for the mix event listener
-         //// this is the mix up code ////
+    
+        
     
     
     // Making a button and assigning it to the constant $remove. This has an event listener and event handler so that when the button is clicked, it will remove the items from the design board.
@@ -97,13 +96,14 @@ const sofaInfo = () => {
             // Appending the item image to the tile
                 const sofaImageLink = response.images[0]                
                 const sofaImage = $('<img>').attr('src', sofaImageLink)
-                $('#sofa').append(sofaImage)
+                const sofaImgClick = $('<a>').attr('href', response.full_link).attr('id', 'sofa-click').attr('target', '_blank')
+                $('#sofa').append(sofaImgClick)
+                $('#sofa-click').append(sofaImage)
         // Appending the item price to the tile
         const sofaPrice = $('<div>').text('$' + `${response.prices.current_price}`).addClass('price')
         $('#sofa').append(sofaPrice)
         // Assigning a <div> to a constant with the item rating and number of reviews and with the class 'rating-review'.
         const sofaRatingReview = $('<div>').text('Rating: ' + `${response.reviews.stars}` + '/5' + ' Reviews: ' + `${response.reviews.total_reviews}`).addClass('rating-review')
-        console.log('Rating: ' + `${response.reviews.stars}` + '/5' + ' Reviews: ' + `${response.reviews.total_reviews}`)
         // Appending the constant to the sofa div.
         $('#sofa').append(sofaRatingReview)
             })
@@ -113,12 +113,13 @@ const sofaInfo = () => {
     
     const lampInfo = () => {
         settings.url = settings.url + lampAsin
-        console.log(settings.url)
         $.ajax(settings).done(function (response) {
             const lampImageLink = response.images[0]
             const lampImage = $('<img>').attr('src', lampImageLink)
-            $('#lamp').append(lampImage)  
-        const lampPrice = $('<div>').text('$' + `${response.prices.current_price}`).addClass('price')
+            const lampImgClick = $('<a>').attr('href', response.full_link).attr('id', $inputValue).attr('id', 'lamp-click').attr('target', '_blank')
+            $('#lamp').append(lampImgClick)
+            $('#lamp-click').append(lampImage)        
+            const lampPrice = $('<div>').text('$' + `${response.prices.current_price}`).addClass('price')
         $('#lamp').append(lampPrice)
         const lampRatingReview = $('<div>').text('Rating: ' + `${response.reviews.stars}` + '/5' + ' Reviews: ' + `${response.reviews.total_reviews}`).addClass('rating-review')
         $('#lamp').append(lampRatingReview)
@@ -131,8 +132,9 @@ const sofaInfo = () => {
         $.ajax(settings).done(function (response) {
             const vaseImageLink = response.images[0]
             const vaseImage = $('<img>').attr('src', vaseImageLink)
-            $('#vase').append(vaseImage)  
-
+            const vaseImgClick = $('<a>').attr('href', response.full_link).attr('id', 'vase-click').attr('target', '_blank')
+            $('#vase').append(vaseImgClick)
+            $('#vase-click').append(vaseImage)
             const vasePrice = $('<div>').text('$' + `${response.prices.current_price}`).addClass('price')
         $('#vase').append(vasePrice)
         const vaseRatingReview = $('<div>').text('Rating: ' + `${response.reviews.stars}` + '/5' + ' Reviews: ' + `${response.reviews.total_reviews}`).addClass('rating-review')
@@ -146,8 +148,9 @@ const sofaInfo = () => {
         $.ajax(settings).done(function (response) {
             const pillowImageLink = response.images[0]
             const pillowImage = $('<img>').attr('src', pillowImageLink)
-            $('#pillow').append(pillowImage)  
-
+            const pillowImgClick = $('<a>').attr('href', response.full_link).attr('id', 'pillow-click').attr('target', '_blank')
+            $('#pillow').append(pillowImgClick)
+            $('#pillow-click').append(pillowImage)
             const pillowPrice = $('<div>').text('$' + `${response.prices.current_price}`).addClass('price')
         $('#pillow').append(pillowPrice)
         const pillowRatingReview = $('<div>').text('Rating: ' + `${response.reviews.stars}` + '/5' + ' Reviews: ' + `${response.reviews.total_reviews}`).addClass('rating-review')
@@ -161,8 +164,9 @@ const sofaInfo = () => {
         $.ajax(settings).done(function (response) {
             const tableImageLink = response.images[0]
             const tableImage = $('<img>').attr('src', tableImageLink)
-            $('#table').append(tableImage)  
-
+            const tableImgClick = $('<a>').attr('href', response.full_link).attr('id', 'table-click').attr('target', '_blank')
+            $('#table').append(tableImgClick)
+            $('#table-click').append(tableImage)
             const tablePrice = $('<div>').text('$' + `${response.prices.current_price}`).addClass('price')
         $('#table').append(tablePrice)
         const tableRatingReview = $('<div>').text('Rating: ' + `${response.reviews.stars}` + '/5' + ' Reviews: ' + `${response.reviews.total_reviews}`).addClass('rating-review')
@@ -171,19 +175,45 @@ const sofaInfo = () => {
         settings.url = "https://amazon-products1.p.rapidapi.com/product?country=US&asin="
     }
 
+    let shuffleArray = []
+
+
     if ($inputValue == 'sofa') { 
         sofaInfo()
+        shuffleArray.push($newInput)
     } else if ($inputValue == 'lamp') {
         lampInfo()
+        shuffleArray.push($newInput)
+
     } else if ($inputValue == 'vase') {
         vaseInfo()
+        shuffleArray.push($newInput)
+
     } else if ($inputValue == 'pillow') {
         pillowInfo()
+        shuffleArray.push($newInput)
+
     } else if ($inputValue == 'table') {
         tableInfo()
-    }
+        shuffleArray.push($newInput)
 
+    }
+    console.log(shuffleArray)
+
+// //// this is the mix up code ////
+// $('#mix-up').on('click', () => {
+//     shuffleArray.sort(()=>{
+//         return .5-Math.random()
+//     })
+//     for (let i = 0; i < shuffleArray.length; i++) {
+//         $('.design-board').append(shuffleArray) 
+//         }
+     
+//     })
+
+    })
 })
+
 
 // listen for mix button
 // randomize array
@@ -215,7 +245,6 @@ const sofaInfo = () => {
 // });
 // }
 
-})
 
 //user will input information into a form
 //form will match URL to an asin number
@@ -271,5 +300,3 @@ const sofaInfo = () => {
 //     console.log($inputValue)
 // selections.push($inputValue)
 // prevents default refresh
-
-

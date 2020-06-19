@@ -22,3 +22,7 @@ const result = {
 
     console.log(array)
 
+
+    console.log(Math.floor(Math.random()*(array.length)))
+
+

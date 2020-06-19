@@ -49,7 +49,7 @@ $('#submit').on('click', () => {
     const $inputValue = $('#input-box').val()
     
     // Pushing the input string inside the selections array.
-   if (selections.length < 6) {
+   if (selections.length < 5) {
     selections.push($inputValue)
 
     console.log(selections)
@@ -78,10 +78,10 @@ $('#submit').on('click', () => {
     
     
     // Making a button and assigning it to the constant $remove. This has an event listener and event handler so that when the button is clicked, it will remove the items from the design board.
-    const $remove = $('<button>').text('X').addClass('remove').css(hidden)
+    const $remove = $('<button>').text('X').addClass('remove')
 
 
-    $newInput.append($remove)
+    $newInput.prepend($remove)
 
     $remove.on('click', (event) => {
         

@@ -2,6 +2,20 @@ body {
     background: rgb(240, 242, 245);
 }
 
+header {
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center; 
+    padding: 25px;
+    color:  rgb(96,103,112);
+
+    border: solid;
+    border-width: 25px 50px 25px 50px;
+    border-color: white;
+    border-radius: 10px;
+    margin: 25px;
+
+}
+
 .design-board {
     display: flex;
     flex-direction: row;
@@ -15,6 +29,12 @@ body {
 
 .design-board {
 background: rgb(240, 242, 245);
+}
+
+.input-formatting {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
 }
 
 .item {
@@ -33,6 +53,10 @@ background: rgb(240, 242, 245);
     color:  rgb(96,103,112);
     box-shadow: 2px 2px rgb(198, 217, 241);
 
+}
+
+#submit {
+    margin-left: 10;
 }
 
 .remove,  #submit{

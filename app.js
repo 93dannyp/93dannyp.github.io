@@ -34,7 +34,7 @@ const apiURL = settings.url
 $(() => {
     //the selections array should have the ASIN values from the product selected from the checklist
     let selections = []
-
+    let shuffleArray = []
 // console.log($('[type=checkbox]'))
 
 
@@ -88,25 +88,25 @@ $('#submit').on('click', (event) => {
         selections.pop()
     })
 
-    
 
-const sofaInfo = () => {
-    settings.url = settings.url + sofaAsin
-        $.ajax(settings).done(function (response) {
-            // Appending the item image to the tile
-                const sofaImageLink = response.images[0]                
-                const sofaImage = $('<img>').attr('src', sofaImageLink)
-                const sofaImgClick = $('<a>').attr('href', response.full_link).attr('id', 'sofa-click').attr('target', '_blank')
-                $('#sofa').append(sofaImgClick)
-                $('#sofa-click').append(sofaImage)
-        // Appending the item price to the tile
-        const sofaPrice = $('<div>').text('$' + `${response.prices.current_price}`).addClass('price')
-        $('#sofa').append(sofaPrice)
-        // Assigning a <div> to a constant with the item rating and number of reviews and with the class 'rating-review'.
-        const sofaRatingReview = $('<div>').text('Rating: ' + `${response.reviews.stars}` + '/5' + ' Reviews: ' + `${response.reviews.total_reviews}`).addClass('rating-review')
-        // Appending the constant to the sofa div.
-        $('#sofa').append(sofaRatingReview)
-            })
+
+    const sofaInfo = () => {
+        settings.url = settings.url + sofaAsin
+            $.ajax(settings).done(function (response) {
+                // Appending the item image to the tile
+                    const sofaImageLink = response.images[0]                
+                    const sofaImage = $('<img>').attr('src', sofaImageLink)
+                    const sofaImgClick = $('<a>').attr('href', response.full_link).attr('id', 'sofa-click').attr('target', '_blank')
+                    $('#sofa').append(sofaImgClick)
+                    $('#sofa-click').append(sofaImage)
+            // Appending the item price to the tile
+            const sofaPrice = $('<div>').text('$' + `${response.prices.current_price}`).addClass('price')
+            $('#sofa').append(sofaPrice)
+            // Assigning a <div> to a constant with the item rating and number of reviews and with the class 'rating-review'.
+            const sofaRatingReview = $('<div>').text('Rating: ' + `${response.reviews.stars}` + '/5' + ' Reviews: ' + `${response.reviews.total_reviews}`).addClass('rating-review')
+            // Appending the constant to the sofa div.
+            $('#sofa').append(sofaRatingReview)
+                })
             settings.url = "https://amazon-products1.p.rapidapi.com/product?country=US&asin="
     }
 
@@ -175,7 +175,6 @@ const sofaInfo = () => {
         settings.url = "https://amazon-products1.p.rapidapi.com/product?country=US&asin="
     }
 
-    let shuffleArray = []
 
 
     if ($inputValue == 'sofa') { 
@@ -199,25 +198,34 @@ const sofaInfo = () => {
 
     }
     console.log(shuffleArray)
-
-// //// this is the mix up code ////
-// $('#mix-up').on('click', () => {
-//     shuffleArray.sort(()=>{
-//         return .5-Math.random()
-//     })
-//     for (let i = 0; i < shuffleArray.length; i++) {
-//         $('.design-board').append(shuffleArray) 
-//         }
-     
-//     })
+    
 
     })
+
+    
+
+//// this is the code for shuffling the items////
+
+    // listen for shuffle button
+$('#mix-up').on('click', () => {
+
+     // Randomize array.
+     // NOTE: this randomization code was borrowed from stackoveflow.com (LINK: https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array).
+    shuffleArray.sort(()=>{
+        return .5-Math.random()
+    })
+
+    // for loop append array into div.
+    for (let i = 0; i < shuffleArray.length; i++) {
+        $('.design-board').append(shuffleArray) 
+        }
+     
+    })
+
 })
 
 
-// listen for mix button
-// randomize array
-// for loop append array into div
+
 // 
 
 

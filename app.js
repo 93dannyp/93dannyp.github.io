@@ -46,16 +46,11 @@ $(() => {
 $('#submit').on('click', (event) => {
 
     // assigning the input string to the constant $inputValue.
-    const $inputValue = $('#input-box').val()
+    const $inputValue = $('#input-box').val().toLowerCase()
     
     // Pushing the input string inside the selections array.
-   if (selections.length < 5) {
     selections.push($inputValue)
 
-    console.log(selections)
-   } else {
-       alert('Your Design Board is full!")')
-   }
    
  
    
@@ -73,7 +68,10 @@ $('#submit').on('click', (event) => {
     $('.design-board').append($newInput)
     
     
-        
+    if (selections.length > 5) {
+        alert('Your Design Board is full!')
+           $newInput.remove()
+       } 
     
     
     // Making a button and assigning it to the constant $remove. This has an event listener and event handler so that when the button is clicked, it will remove the items from the design board.
@@ -195,6 +193,10 @@ $('#submit').on('click', (event) => {
     } else if ($inputValue == 'table') {
         tableInfo()
         shuffleArray.push($newInput)
+
+    } else {
+        alert('this item is not available for comparison at this time')
+        $newInput.remove()
 
     }
     console.log(shuffleArray)

@@ -198,29 +198,34 @@ $('#submit').on('click', (event) => {
 
     }
     console.log(shuffleArray)
+
+    
     
 
     })
 
     
 
-//// this is the code for shuffling the items////
+    //// this is the code for shuffling the items////
 
     // listen for shuffle button
-$('#mix-up').on('click', () => {
+    $('#mix-up').on('click', () => {
 
-     // Randomize array.
-     // NOTE: this randomization code was borrowed from stackoveflow.com (LINK: https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array).
-    shuffleArray.sort(()=>{
-        return .5-Math.random()
-    })
+        // Randomize array.
+        // NOTE: this randomization code was borrowed from stackoveflow.com (LINK: https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array).
+        shuffleArray.sort(()=>{
+            return .5-Math.random()
+        })
 
-    // for loop append array into div.
-    for (let i = 0; i < shuffleArray.length; i++) {
-        $('.design-board').append(shuffleArray) 
+        // for loop append array into div.
+        for (let i = 0; i < shuffleArray.length; i++) {
+            $('.design-board').append(shuffleArray) 
         }
-     
+        
     })
+
+
+    
 
 })
 

@@ -1,14 +1,13 @@
 // console.log('connected')
 
 //implementing amazon products API (link:'')
-
 const pillowAsin = 'B086DJ9Z3D'
 const sofaAsin = 'B019516ZP8'
 const tableAsin = 'B01C1A5BMS'
 const lampAsin = 'B073751DMJ'
 const vaseAsin = 'B08119Z2BR'
 
-
+// the object 'settings' that is given from the Amazon Products API is used to implement the promise.
 const settings = {
 	"async": true,
 	"crossDomain": true,
@@ -20,232 +19,194 @@ const settings = {
 	}
 }
 
+// this constant will be used for accessing the desired items later in the code.
 const apiURL = settings.url
-// $.ajax(settings).done(function (response) {
-// 	console.log(response);
-// });
-
-
-
-// make an array of pushed variables
-//make a form that accepts input
 
 
 $(() => {
-    //the selections array should have the ASIN values from the product selected from the checklist
+    //the selections array should have the ASIN values from the product selected from the checklist.
     let selections = []
     let shuffleArray = []
-// console.log($('[type=checkbox]'))
 
+    // This is an event listener for when the add button is clicked.
+    $('#submit').on('click', (event) => {
 
-
-
-//Put input from form inside the array.
-
-// This is an event listener for when the Add button is clicked.
-$('#submit').on('click', (event) => {
-
-    // assigning the input string to the constant $inputValue.
-    const $inputValue = $('#input-box').val().toLowerCase()
-    
-    // Pushing the input string inside the selections array.
-    selections.push($inputValue)
-
-   
- 
-   
-    // Preventing the webpage from automatically refreshing so it does not lose state.
-    event.preventDefault()
-
-
-    // Assigning the varible $newInput to the <div>'s. The value of these <div>'s will appear on the webpage.
-    let $newInput = $('<div>').text(selections[selections.length-1])
-    $newInput.addClass('item').attr('id', $inputValue)
-
-   
-
-    // Appending the new input values to the design board so we have a visual list of input values (the items).
-    $('.design-board').append($newInput)
-    
-    
-    if (selections.length > 5) {
-        alert('Your Design Board is full!')
-           $newInput.remove()
-       } 
-    
-    
-    // Making a button and assigning it to the constant $remove. This has an event listener and event handler so that when the button is clicked, it will remove the items from the design board.
-    const $remove = $('<button>').text('X').addClass('remove')
-
-
-    $newInput.prepend($remove)
-
-    $remove.on('click', (event) => {
+        // assigning the input string to the constant $inputValue.
+        const $inputValue = $('#input-box').val().toLowerCase()
         
-        $(event.currentTarget).parent().remove()
-        selections.pop()
-    })
+        // Pushing the input string inside the selections array.
+        selections.push($inputValue)
+
+        // Preventing the webpage from automatically refreshing so it does not lose state.
+        event.preventDefault()
+
+        // Assigning the varible $newInput to the <div>'s. The value of these <div>'s will appear on the webpage.
+        let $newInput = $('<div>').text(selections[selections.length-1])
+        $newInput.addClass('item').attr('id', $inputValue)
+
+   
+
+        // Appending the new input values to the design board so we have a visual list of input values (the items).
+        $('.design-board').append($newInput)
+    
+    
+        if (selections.length > 5) {
+            alert('Your Design Board is full!')
+            $newInput.remove()
+        } 
+    
+    
+        // Making a button and assigning it to the constant $remove. This has an event listener and event handler so that when the button is clicked, it will remove the items from the design board.
+        const $remove = $('<button>').text('X').addClass('remove')
+
+
+        $newInput.prepend($remove)
+
+        $remove.on('click', (event) => {
+            
+            $(event.currentTarget).parent().remove()
+            selections.pop()
+        })
 
 
 
-    const sofaInfo = () => {
-        settings.url = settings.url + sofaAsin
-            $.ajax(settings).done(function (response) {
-                // Appending the item image to the tile
+        const sofaInfo = () => {
+            settings.url = settings.url + sofaAsin
+                $.ajax(settings).done(function (response) {
+                    // Appending the item image to the tile
                     const sofaImageLink = response.images[0]                
                     const sofaImage = $('<img>').attr('src', sofaImageLink)
                     const sofaImgClick = $('<a>').attr('href', response.full_link).attr('id', 'sofa-click').attr('target', '_blank')
                     $('#sofa').append(sofaImgClick)
                     $('#sofa-click').append(sofaImage)
-            // Appending the item price to the tile
-            const sofaPrice = $('<div>').text('$' + `${response.prices.current_price}`).addClass('price')
-            $('#sofa').append(sofaPrice)
-            // Assigning a <div> to a constant with the item rating and number of reviews and with the class 'rating-review'.
-            const sofaRatingReview = $('<div>').text('Rating: ' + `${response.reviews.stars}` + '/5' + ' Reviews: ' + `${response.reviews.total_reviews}`).addClass('rating-review')
-            // Appending the constant to the sofa div.
-            $('#sofa').append(sofaRatingReview)
+                    // Appending the item price to the tile
+                    const sofaPrice = $('<div>').text('$' + `${response.prices.current_price}`).addClass('price')
+                    $('#sofa').append(sofaPrice)
+                    // Assigning a <div> to a constant with the item rating and number of reviews and with the class 'rating-review'.
+                    const sofaRatingReview = $('<div>').text('Rating: ' + `${response.reviews.stars}` + '/5' + ' Reviews: ' + `${response.reviews.total_reviews}`).addClass('rating-review')
+                    // Appending the constant to the sofa div.
+                    $('#sofa').append(sofaRatingReview)
                 })
+                settings.url = "https://amazon-products1.p.rapidapi.com/product?country=US&asin="
+            }
+
+        
+        const lampInfo = () => {
+            settings.url = settings.url + lampAsin
+            $.ajax(settings).done(function (response) {
+                const lampImageLink = response.images[0]
+                const lampImage = $('<img>').attr('src', lampImageLink)
+                const lampImgClick = $('<a>').attr('href', response.full_link).attr('id', $inputValue).attr('id', 'lamp-click').attr('target', '_blank')
+                $('#lamp').append(lampImgClick)
+                $('#lamp-click').append(lampImage)        
+                const lampPrice = $('<div>').text('$' + `${response.prices.current_price}`).addClass('price')
+                $('#lamp').append(lampPrice)
+                const lampRatingReview = $('<div>').text('Rating: ' + `${response.reviews.stars}` + '/5' + ' Reviews: ' + `${response.reviews.total_reviews}`).addClass('rating-review')
+                $('#lamp').append(lampRatingReview)
+            })
             settings.url = "https://amazon-products1.p.rapidapi.com/product?country=US&asin="
-    }
+        }
 
-    
-    const lampInfo = () => {
-        settings.url = settings.url + lampAsin
-        $.ajax(settings).done(function (response) {
-            const lampImageLink = response.images[0]
-            const lampImage = $('<img>').attr('src', lampImageLink)
-            const lampImgClick = $('<a>').attr('href', response.full_link).attr('id', $inputValue).attr('id', 'lamp-click').attr('target', '_blank')
-            $('#lamp').append(lampImgClick)
-            $('#lamp-click').append(lampImage)        
-            const lampPrice = $('<div>').text('$' + `${response.prices.current_price}`).addClass('price')
-        $('#lamp').append(lampPrice)
-        const lampRatingReview = $('<div>').text('Rating: ' + `${response.reviews.stars}` + '/5' + ' Reviews: ' + `${response.reviews.total_reviews}`).addClass('rating-review')
-        $('#lamp').append(lampRatingReview)
-        })
-        settings.url = "https://amazon-products1.p.rapidapi.com/product?country=US&asin="
-    }
+        const vaseInfo = () => {
+            settings.url = settings.url + vaseAsin
+            $.ajax(settings).done(function (response) {
+                const vaseImageLink = response.images[0]
+                const vaseImage = $('<img>').attr('src', vaseImageLink)
+                const vaseImgClick = $('<a>').attr('href', response.full_link).attr('id', 'vase-click').attr('target', '_blank')
+                $('#vase').append(vaseImgClick)
+                $('#vase-click').append(vaseImage)
+                const vasePrice = $('<div>').text('$' + `${response.prices.current_price}`).addClass('price')
+                $('#vase').append(vasePrice)
+                const vaseRatingReview = $('<div>').text('Rating: ' + `${response.reviews.stars}` + '/5' + ' Reviews: ' + `${response.reviews.total_reviews}`).addClass('rating-review')
+                $('#vase').append(vaseRatingReview)
+            })
+            settings.url = "https://amazon-products1.p.rapidapi.com/product?country=US&asin="
+        }
 
-    const vaseInfo = () => {
-        settings.url = settings.url + vaseAsin
-        $.ajax(settings).done(function (response) {
-            const vaseImageLink = response.images[0]
-            const vaseImage = $('<img>').attr('src', vaseImageLink)
-            const vaseImgClick = $('<a>').attr('href', response.full_link).attr('id', 'vase-click').attr('target', '_blank')
-            $('#vase').append(vaseImgClick)
-            $('#vase-click').append(vaseImage)
-            const vasePrice = $('<div>').text('$' + `${response.prices.current_price}`).addClass('price')
-        $('#vase').append(vasePrice)
-        const vaseRatingReview = $('<div>').text('Rating: ' + `${response.reviews.stars}` + '/5' + ' Reviews: ' + `${response.reviews.total_reviews}`).addClass('rating-review')
-        $('#vase').append(vaseRatingReview)
-        })
-        settings.url = "https://amazon-products1.p.rapidapi.com/product?country=US&asin="
-    }
+        const pillowInfo = () => {
+            settings.url = settings.url + pillowAsin
+            $.ajax(settings).done(function (response) {
+                const pillowImageLink = response.images[0]
+                const pillowImage = $('<img>').attr('src', pillowImageLink)
+                const pillowImgClick = $('<a>').attr('href', response.full_link).attr('id', 'pillow-click').attr('target', '_blank')
+                $('#pillow').append(pillowImgClick)
+                $('#pillow-click').append(pillowImage)
+                const pillowPrice = $('<div>').text('$' + `${response.prices.current_price}`).addClass('price')
+                $('#pillow').append(pillowPrice)
+                const pillowRatingReview = $('<div>').text('Rating: ' + `${response.reviews.stars}` + '/5' + ' Reviews: ' + `${response.reviews.total_reviews}`).addClass('rating-review')
+                $('#pillow').append(pillowRatingReview)
+            })
+            settings.url = "https://amazon-products1.p.rapidapi.com/product?country=US&asin="
+        }
 
-    const pillowInfo = () => {
-        settings.url = settings.url + pillowAsin
-        $.ajax(settings).done(function (response) {
-            const pillowImageLink = response.images[0]
-            const pillowImage = $('<img>').attr('src', pillowImageLink)
-            const pillowImgClick = $('<a>').attr('href', response.full_link).attr('id', 'pillow-click').attr('target', '_blank')
-            $('#pillow').append(pillowImgClick)
-            $('#pillow-click').append(pillowImage)
-            const pillowPrice = $('<div>').text('$' + `${response.prices.current_price}`).addClass('price')
-        $('#pillow').append(pillowPrice)
-        const pillowRatingReview = $('<div>').text('Rating: ' + `${response.reviews.stars}` + '/5' + ' Reviews: ' + `${response.reviews.total_reviews}`).addClass('rating-review')
-        $('#pillow').append(pillowRatingReview)
-        })
-        settings.url = "https://amazon-products1.p.rapidapi.com/product?country=US&asin="
-    }
-
-    const tableInfo = () => {
-        settings.url = settings.url + tableAsin
-        $.ajax(settings).done(function (response) {
-            const tableImageLink = response.images[0]
-            const tableImage = $('<img>').attr('src', tableImageLink)
-            const tableImgClick = $('<a>').attr('href', response.full_link).attr('id', 'table-click').attr('target', '_blank')
-            $('#table').append(tableImgClick)
-            $('#table-click').append(tableImage)
-            const tablePrice = $('<div>').text('$' + `${response.prices.current_price}`).addClass('price')
-        $('#table').append(tablePrice)
-        const tableRatingReview = $('<div>').text('Rating: ' + `${response.reviews.stars}` + '/5' + ' Reviews: ' + `${response.reviews.total_reviews}`).addClass('rating-review')
-        $('#table').append(tableRatingReview)
-        })
-        settings.url = "https://amazon-products1.p.rapidapi.com/product?country=US&asin="
-    }
+        const tableInfo = () => {
+            settings.url = settings.url + tableAsin
+            $.ajax(settings).done(function (response) {
+                const tableImageLink = response.images[0]
+                const tableImage = $('<img>').attr('src', tableImageLink)
+                const tableImgClick = $('<a>').attr('href', response.full_link).attr('id', 'table-click').attr('target', '_blank')
+                $('#table').append(tableImgClick)
+                $('#table-click').append(tableImage)
+                const tablePrice = $('<div>').text('$' + `${response.prices.current_price}`).addClass('price')
+                $('#table').append(tablePrice)
+                const tableRatingReview = $('<div>').text('Rating: ' + `${response.reviews.stars}` + '/5' + ' Reviews: ' + `${response.reviews.total_reviews}`).addClass('rating-review')
+                $('#table').append(tableRatingReview)
+            })
+            settings.url = "https://amazon-products1.p.rapidapi.com/product?country=US&asin="
+        }
 
 
+        // This is the if logic for invoking the function that pertains to the user input.
+        if ($inputValue == 'sofa') { 
+            sofaInfo()
+            shuffleArray.push($newInput)
+        } else if ($inputValue == 'lamp') {
+            lampInfo()
+            shuffleArray.push($newInput)
 
-    if ($inputValue == 'sofa') { 
-        sofaInfo()
-        shuffleArray.push($newInput)
-    } else if ($inputValue == 'lamp') {
-        lampInfo()
-        shuffleArray.push($newInput)
+        } else if ($inputValue == 'vase') {
+            vaseInfo()
+            shuffleArray.push($newInput)
 
-    } else if ($inputValue == 'vase') {
-        vaseInfo()
-        shuffleArray.push($newInput)
+        } else if ($inputValue == 'pillow') {
+            pillowInfo()
+            shuffleArray.push($newInput)
 
-    } else if ($inputValue == 'pillow') {
-        pillowInfo()
-        shuffleArray.push($newInput)
+        } else if ($inputValue == 'table') {
+            tableInfo()
+            shuffleArray.push($newInput)
 
-    } else if ($inputValue == 'table') {
-        tableInfo()
-        shuffleArray.push($newInput)
+        } else {
+            alert('this item is not available for comparison at this time')
+            $newInput.remove()
 
-    } else {
-        alert('this item is not available for comparison at this time')
-        $newInput.remove()
-
-    }
-    console.log(shuffleArray)
-
-    
-    
+        }
 
     })
 
-    
-
-    //// this is the code for shuffling the items////
-
-    // listen for shuffle button
+    //this code will shuffle the items.
+    // listen for shuffle button.
     $('#mix-up').on('click', () => {
-
         // Randomize array.
         // NOTE: this randomization code was borrowed from stackoveflow.com (LINK: https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array).
         shuffleArray.sort(()=>{
             return .5-Math.random()
         })
 
-        // for loop append array into div.
+        // for loop appending array into div.
         for (let i = 0; i < shuffleArray.length; i++) {
             $('.design-board').append(shuffleArray) 
         }
-        
     })
-
-
-    
-
+// this is the closing bracket for the add button event listener
 })
 
 
 
-// 
-
-
-
-
-// this is the closing bracket for the add button event listener
-
-
 
     
+///////////////notes and incomplete/unused code ideas/////////////////
 
-
-//////////This is the if logic for matching the value of the checked box and the corresponding constant with the ASIN number.//////////
 
 
 // // this is supposed to use the vairable assigned to the sofa html element

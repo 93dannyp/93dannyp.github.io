@@ -1,13 +1,13 @@
 // console.log('connected')
 
-//implementing amazon products API (link:'')
+//Assigning product ASIN to a product constant.
 const pillowAsin = 'B086DJ9Z3D'
 const sofaAsin = 'B019516ZP8'
 const tableAsin = 'B01C1A5BMS'
 const lampAsin = 'B073751DMJ'
 const vaseAsin = 'B08119Z2BR'
 
-// the object 'settings' that is given from the Amazon Products API is used to implement the promise.
+// This is the object 'settings' that is given from the Amazon Products API is used to implement the promise.
 const settings = {
 	"async": true,
 	"crossDomain": true,
@@ -19,13 +19,14 @@ const settings = {
 	}
 }
 
-// this constant will be used for accessing the desired items later in the code.
+// This constant will be used for accessing the desired items later in the code.
 const apiURL = settings.url
 
 
 $(() => {
-    //the selections array should have the ASIN values from the product selected from the checklist.
+    // The selections array should have the ASIN values from the product selected from the checklist.
     let selections = []
+    // The shuffleArray will be utilized later in the code when <div> constants get pushed in to be randomized and returned.
     let shuffleArray = []
 
     // This is an event listener for when the add button is clicked.
@@ -49,7 +50,7 @@ $(() => {
         // Appending the new input values to the design board so we have a visual list of input values (the items).
         $('.design-board').append($newInput)
     
-    
+        // This keeps the design board from having more than 5 cards.
         if (selections.length > 5) {
             alert('Your Design Board is full!')
             $newInput.remove()
@@ -58,23 +59,23 @@ $(() => {
     
         // Making a button and assigning it to the constant $remove. This has an event listener and event handler so that when the button is clicked, it will remove the items from the design board.
         const $remove = $('<button>').text('X').addClass('remove')
-
-
         $newInput.prepend($remove)
 
+        // Event listener and handler for the remove button.
         $remove.on('click', (event) => {
-            
             $(event.currentTarget).parent().remove()
             selections.pop()
         })
 
 
-
+        // This function appends the corresponding item data when it's invoked. Each item has similar logic that works the same way.
         const sofaInfo = () => {
+            // This takes the URL from the 'settings' object and adds the item ASIN to the end.
             settings.url = settings.url + sofaAsin
+            // The promise gets the item information in the form of an object.
                 $.ajax(settings).done(function (response) {
-                    // Appending the item image to the tile
-                    const sofaImageLink = response.images[0]                
+                    // This code (lines 78-82) appends a clickable item image that can take you to the item's page on Amazon.com.
+                    const sofaImageLink = response.images[0] 
                     const sofaImage = $('<img>').attr('src', sofaImageLink)
                     const sofaImgClick = $('<a>').attr('href', response.full_link).attr('id', 'sofa-click').attr('target', '_blank')
                     $('#sofa').append(sofaImgClick)
@@ -87,6 +88,7 @@ $(() => {
                     // Appending the constant to the sofa div.
                     $('#sofa').append(sofaRatingReview)
                 })
+                // Reassigning settings.url to its original string without the ASIN number on the end.
                 settings.url = "https://amazon-products1.p.rapidapi.com/product?country=US&asin="
             }
 
@@ -184,8 +186,8 @@ $(() => {
 
     })
 
-    //this code will shuffle the items.
-    // listen for shuffle button.
+    // This code will shuffle the items.
+    // Listen for shuffle button.
     $('#mix-up').on('click', () => {
         // Randomize array.
         // NOTE: this randomization code was borrowed from stackoveflow.com (LINK: https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array).
@@ -193,21 +195,20 @@ $(() => {
             return .5-Math.random()
         })
 
-        // for loop appending array into div.
+        // For loop appending array into div.
         for (let i = 0; i < shuffleArray.length; i++) {
             $('.design-board').append(shuffleArray) 
         }
     })
-// this is the closing bracket for the add button event listener
+// This is the closing bracket for the add button event listener
 })
+
 
 
 
 
     
 ///////////////notes and incomplete/unused code ideas/////////////////
-
-
 
 // // this is supposed to use the vairable assigned to the sofa html element
 // if (selections[0] = $sofa) {
@@ -244,7 +245,6 @@ $(() => {
 
 
 //////////////////////////////// code graveyard ////////////////////////////
-
 
 
 //// an attempt to get my API to function ////
